@@ -28,7 +28,6 @@ COPY main.py .
 COPY revolut_to_pit8c.py .
 COPY example_revolut_statement.csv .
 COPY README.md .
-COPY SECURITY.md .
 
 # Utworzenie katalogu na logi z odpowiednimi uprawnieniami
 RUN mkdir -p /app/logs && chown -R appuser:appuser /app
