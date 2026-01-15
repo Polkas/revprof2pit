@@ -1,0 +1,281 @@
+Summary for Savings Accounts - EUR
+Description,Amount
+Saldo początkowe,"5 000,00€"
+Suma wpłat,10 000€
+Suma wypłat,3 000€
+Łączna kwota zarobionych odsetek,"95,50€"
+Podatek ogółem,0€
+Opłaty ogółem,0€
+Saldo końcowe,"12 095,50€"
+
+Summary for Savings Accounts - PLN
+Description,Amount
+Saldo początkowe,"15 000,00 PLN"
+Suma wpłat,5 000 PLN
+Suma wypłat,2 000 PLN
+Łączna kwota zarobionych odsetek,"420,75 PLN"
+Podatek ogółem,0 PLN
+Opłaty ogółem,0 PLN
+Saldo końcowe,"18 420,75 PLN"
+
+Summary for Brokerage Account - EUR
+Portfolio  created on 15 cze 2023
+
+
+Sells summary,Amount
+Wpływy brutto,0€
+Podstawa kosztowa,0€
+Zrealizowany zysk/strata brutto,0€
+
+Other Income and Fees summary,Amount
+Dywidendy,"1,50€"
+Podatek potrącany u źródła,"0,15€"
+Kwota,"1,35€"
+
+Summary for Brokerage Account - USD
+Portfolio  created on 15 cze 2023
+
+
+Sells summary,Amount
+Wpływy brutto,0$
+Podstawa kosztowa,0$
+Zrealizowany zysk/strata brutto,0$
+
+Other Income and Fees summary,Amount
+Dywidendy,"3,50$"
+Podatek potrącany u źródła,"0,53$"
+Kwota,"2,97$"
+
+Transactions for Savings Accounts - EUR
+Date,Description,Money out,Money in,Balance
+1 sty 2025,Interest earned,,"0,15€","5 000,15€"
+2 sty 2025,Interest earned,,"0,15€","5 000,30€"
+3 sty 2025,Interest earned,,"0,15€","5 000,45€"
+4 sty 2025,Interest earned,,"0,15€","5 000,60€"
+5 sty 2025,Interest earned,,"0,15€","5 000,75€"
+6 sty 2025,Interest earned,,"0,15€","5 000,90€"
+7 sty 2025,Interest earned,,"0,15€","5 001,05€"
+8 sty 2025,Interest earned,,"0,15€","5 001,20€"
+9 sty 2025,Interest earned,,"0,15€","5 001,35€"
+10 sty 2025,Interest earned,,"0,15€","5 001,50€"
+11 sty 2025,Interest earned,,"0,15€","5 001,65€"
+12 sty 2025,Interest earned,,"0,15€","5 001,80€"
+13 sty 2025,Interest earned,,"0,15€","5 001,95€"
+14 sty 2025,Interest earned,,"0,15€","5 002,10€"
+15 sty 2025,Interest earned,,"0,15€","5 002,25€"
+16 sty 2025,Depositing savings,,2 000€,"7 002,25€"
+17 sty 2025,Interest earned,,"0,21€","7 002,46€"
+18 sty 2025,Interest earned,,"0,21€","7 002,67€"
+19 sty 2025,Interest earned,,"0,21€","7 002,88€"
+20 sty 2025,Interest earned,,"0,21€","7 003,09€"
+21 sty 2025,Interest earned,,"0,21€","7 003,30€"
+22 sty 2025,Interest earned,,"0,21€","7 003,51€"
+23 sty 2025,Interest earned,,"0,21€","7 003,72€"
+24 sty 2025,Interest earned,,"0,21€","7 003,93€"
+25 sty 2025,Interest earned,,"0,21€","7 004,14€"
+26 sty 2025,Interest earned,,"0,21€","7 004,35€"
+27 sty 2025,Interest earned,,"0,21€","7 004,56€"
+28 sty 2025,Interest earned,,"0,21€","7 004,77€"
+29 sty 2025,Interest earned,,"0,21€","7 004,98€"
+30 sty 2025,Interest earned,,"0,21€","7 005,19€"
+31 sty 2025,Interest earned,,"0,21€","7 005,40€"
+1 lut 2025,Interest earned,,"0,21€","7 005,61€"
+2 lut 2025,Interest earned,,"0,21€","7 005,82€"
+3 lut 2025,Interest earned,,"0,21€","7 006,03€"
+4 lut 2025,Interest earned,,"0,21€","7 006,24€"
+5 lut 2025,Interest earned,,"0,21€","7 006,45€"
+6 lut 2025,Interest earned,,"0,21€","7 006,66€"
+7 lut 2025,Interest earned,,"0,21€","7 006,87€"
+8 lut 2025,Interest earned,,"0,21€","7 007,08€"
+9 lut 2025,Interest earned,,"0,21€","7 007,29€"
+10 lut 2025,Interest earned,,"0,21€","7 007,50€"
+11 lut 2025,Interest earned,,"0,21€","7 007,71€"
+12 lut 2025,Interest earned,,"0,21€","7 007,92€"
+13 lut 2025,Interest earned,,"0,21€","7 008,13€"
+14 lut 2025,Interest earned,,"0,21€","7 008,34€"
+15 lut 2025,Depositing savings,,3 000€,"10 008,34€"
+16 lut 2025,Interest earned,,"0,30€","10 008,64€"
+17 lut 2025,Interest earned,,"0,30€","10 008,94€"
+18 lut 2025,Interest earned,,"0,30€","10 009,24€"
+19 lut 2025,Interest earned,,"0,30€","10 009,54€"
+20 lut 2025,Interest earned,,"0,30€","10 009,84€"
+21 lut 2025,Interest earned,,"0,30€","10 010,14€"
+22 lut 2025,Interest earned,,"0,30€","10 010,44€"
+23 lut 2025,Interest earned,,"0,30€","10 010,74€"
+24 lut 2025,Interest earned,,"0,30€","10 011,04€"
+25 lut 2025,Interest earned,,"0,30€","10 011,34€"
+26 lut 2025,Interest earned,,"0,30€","10 011,64€"
+27 lut 2025,Interest earned,,"0,30€","10 011,94€"
+28 lut 2025,Interest earned,,"0,30€","10 012,24€"
+1 mar 2025,Interest earned,,"0,30€","10 012,54€"
+2 mar 2025,Interest earned,,"0,30€","10 012,84€"
+3 mar 2025,Interest earned,,"0,30€","10 013,14€"
+4 mar 2025,Interest earned,,"0,30€","10 013,44€"
+5 mar 2025,Interest earned,,"0,30€","10 013,74€"
+6 mar 2025,Interest earned,,"0,30€","10 014,04€"
+7 mar 2025,Interest earned,,"0,30€","10 014,34€"
+8 mar 2025,Interest earned,,"0,30€","10 014,64€"
+9 mar 2025,Interest earned,,"0,30€","10 014,94€"
+10 mar 2025,Interest earned,,"0,30€","10 015,24€"
+11 mar 2025,Withdrawing savings,500€,,"9 515,24€"
+12 mar 2025,Interest earned,,"0,29€","9 515,53€"
+13 mar 2025,Interest earned,,"0,29€","9 515,82€"
+14 mar 2025,Interest earned,,"0,29€","9 516,11€"
+15 mar 2025,Interest earned,,"0,29€","9 516,40€"
+31 gru 2025,Interest earned,,"0,29€","12 095,50€"
+
+Transactions for Savings Accounts - PLN
+Date,Description,Money out,Money in,Balance
+1 sty 2025,Interest earned,,"1,25 PLN","15 001,25 PLN"
+2 sty 2025,Interest earned,,"1,25 PLN","15 002,50 PLN"
+3 sty 2025,Interest earned,,"1,25 PLN","15 003,75 PLN"
+4 sty 2025,Interest earned,,"1,25 PLN","15 005,00 PLN"
+5 sty 2025,Interest earned,,"1,25 PLN","15 006,25 PLN"
+6 sty 2025,Interest earned,,"1,25 PLN","15 007,50 PLN"
+7 sty 2025,Interest earned,,"1,25 PLN","15 008,75 PLN"
+8 sty 2025,Interest earned,,"1,25 PLN","15 010,00 PLN"
+9 sty 2025,Interest earned,,"1,25 PLN","15 011,25 PLN"
+10 sty 2025,Interest earned,,"1,25 PLN","15 012,50 PLN"
+11 sty 2025,Interest earned,,"1,25 PLN","15 013,75 PLN"
+12 sty 2025,Interest earned,,"1,25 PLN","15 015,00 PLN"
+13 sty 2025,Interest earned,,"1,25 PLN","15 016,25 PLN"
+14 sty 2025,Interest earned,,"1,25 PLN","15 017,50 PLN"
+15 sty 2025,Interest earned,,"1,25 PLN","15 018,75 PLN"
+16 sty 2025,Depositing savings,,3 000 PLN,"18 018,75 PLN"
+17 sty 2025,Interest earned,,"1,50 PLN","18 020,25 PLN"
+18 sty 2025,Interest earned,,"1,50 PLN","18 021,75 PLN"
+19 sty 2025,Interest earned,,"1,50 PLN","18 023,25 PLN"
+20 sty 2025,Interest earned,,"1,50 PLN","18 024,75 PLN"
+21 sty 2025,Interest earned,,"1,50 PLN","18 026,25 PLN"
+22 sty 2025,Interest earned,,"1,50 PLN","18 027,75 PLN"
+23 sty 2025,Interest earned,,"1,50 PLN","18 029,25 PLN"
+24 sty 2025,Interest earned,,"1,50 PLN","18 030,75 PLN"
+25 sty 2025,Interest earned,,"1,50 PLN","18 032,25 PLN"
+26 sty 2025,Interest earned,,"1,50 PLN","18 033,75 PLN"
+27 sty 2025,Interest earned,,"1,50 PLN","18 035,25 PLN"
+28 sty 2025,Interest earned,,"1,50 PLN","18 036,75 PLN"
+29 sty 2025,Interest earned,,"1,50 PLN","18 038,25 PLN"
+30 sty 2025,Interest earned,,"1,50 PLN","18 039,75 PLN"
+31 sty 2025,Interest earned,,"1,50 PLN","18 041,25 PLN"
+1 lut 2025,Interest earned,,"1,50 PLN","18 042,75 PLN"
+2 lut 2025,Interest earned,,"1,50 PLN","18 044,25 PLN"
+3 lut 2025,Interest earned,,"1,50 PLN","18 045,75 PLN"
+4 lut 2025,Interest earned,,"1,50 PLN","18 047,25 PLN"
+5 lut 2025,Interest earned,,"1,50 PLN","18 048,75 PLN"
+6 lut 2025,Interest earned,,"1,50 PLN","18 050,25 PLN"
+7 lut 2025,Interest earned,,"1,50 PLN","18 051,75 PLN"
+8 lut 2025,Interest earned,,"1,50 PLN","18 053,25 PLN"
+9 lut 2025,Interest earned,,"1,50 PLN","18 054,75 PLN"
+10 lut 2025,Interest earned,,"1,50 PLN","18 056,25 PLN"
+11 lut 2025,Interest earned,,"1,50 PLN","18 057,75 PLN"
+12 lut 2025,Interest earned,,"1,50 PLN","18 059,25 PLN"
+13 lut 2025,Interest earned,,"1,50 PLN","18 060,75 PLN"
+14 lut 2025,Interest earned,,"1,50 PLN","18 062,25 PLN"
+15 lut 2025,Interest earned,,"1,50 PLN","18 063,75 PLN"
+16 lut 2025,Depositing savings,,2 000 PLN,"20 063,75 PLN"
+17 lut 2025,Interest earned,,"1,67 PLN","20 065,42 PLN"
+18 lut 2025,Interest earned,,"1,67 PLN","20 067,09 PLN"
+19 lut 2025,Interest earned,,"1,67 PLN","20 068,76 PLN"
+20 lut 2025,Interest earned,,"1,67 PLN","20 070,43 PLN"
+21 lut 2025,Interest earned,,"1,67 PLN","20 072,10 PLN"
+22 lut 2025,Interest earned,,"1,67 PLN","20 073,77 PLN"
+23 lut 2025,Interest earned,,"1,67 PLN","20 075,44 PLN"
+24 lut 2025,Interest earned,,"1,67 PLN","20 077,11 PLN"
+25 lut 2025,Interest earned,,"1,67 PLN","20 078,78 PLN"
+26 lut 2025,Interest earned,,"1,67 PLN","20 080,45 PLN"
+27 lut 2025,Interest earned,,"1,67 PLN","20 082,12 PLN"
+28 lut 2025,Interest earned,,"1,67 PLN","20 083,79 PLN"
+1 mar 2025,Interest earned,,"1,67 PLN","20 085,46 PLN"
+2 mar 2025,Interest earned,,"1,67 PLN","20 087,13 PLN"
+3 mar 2025,Interest earned,,"1,67 PLN","20 088,80 PLN"
+4 mar 2025,Interest earned,,"1,67 PLN","20 090,47 PLN"
+5 mar 2025,Interest earned,,"1,67 PLN","20 092,14 PLN"
+6 mar 2025,Interest earned,,"1,67 PLN","20 093,81 PLN"
+7 mar 2025,Interest earned,,"1,67 PLN","20 095,48 PLN"
+8 mar 2025,Interest earned,,"1,67 PLN","20 097,15 PLN"
+9 mar 2025,Interest earned,,"1,67 PLN","20 098,82 PLN"
+10 mar 2025,Interest earned,,"1,67 PLN","20 100,49 PLN"
+11 mar 2025,Withdrawing savings,1 000 PLN,,"19 100,49 PLN"
+12 mar 2025,Interest earned,,"1,59 PLN","19 102,08 PLN"
+13 mar 2025,Interest earned,,"1,59 PLN","19 103,67 PLN"
+14 mar 2025,Interest earned,,"1,59 PLN","19 105,26 PLN"
+15 mar 2025,Interest earned,,"1,59 PLN","19 106,85 PLN"
+31 gru 2025,Interest earned,,"1,59 PLN","18 420,75 PLN"
+
+Transactions for Brokerage Account dividends - EUR
+Portfolio  created on 15 cze 2023
+Date,Security name,Symbol,ISIN,Country,Gross amount,Gross amount base currency,Gross amount rate,Withholding tax,Withholding tax base currency,Net amount,Net amount base currency
+19 mar 2025,iShares Dow Jones Global Titans 50 ETF (Dist) dividend,EXI2,DE0006289382,DE,€0.05,0.21 PLN,,€0,,€0.05,0.21 PLN
+17 cze 2025,iShares Dow Jones Global Titans 50 ETF (Dist) dividend,EXI2,DE0006289382,DE,€0.20,0.85 PLN,,€0,,€0.20,0.85 PLN
+6 lis 2025,ASML Holding N.V. dividend,ASME,NL0010273215,NL,€1.10,4.67 PLN,,€0.15,,€0.95,4.03 PLN
+17 gru 2025,iShares Dow Jones Global Titans 50 ETF (Dist) dividend,EXI2,DE0006289382,DE,€0.15,0.63 PLN,,€0,,€0.15,0.63 PLN
+
+Transactions for Brokerage Account dividends - USD
+Portfolio  created on 15 cze 2023
+Date,Security name,Symbol,ISIN,Country,Gross amount,Gross amount base currency,Gross amount rate,Withholding tax,Withholding tax base currency,Net amount,Net amount base currency
+16 gru 2025,UnitedHealth dividend,UNH,US91324P1021,US,US$3.50,12.55 PLN,,US$0.53,,US$2.97,10.65 PLN
+
+Transactions for Brokerage Account sells - EUR
+Portfolio  created on 15 cze 2023
+Date acquired,Date sold,Security name,Symbol,ISIN,Country,Qty,Cost basis,Cost basis base currency,Cost basis rate,Gross proceeds,Gross proceeds base currency,Gross proceeds rate,Gross PnL,Gross PnL base currency,Fees,Fees  base currency
+6 lis 2024,10 mar 2025,Vanguard S&P 500 Acc UCITS ETF,VUAA,IE00BFMXXD54,IE,15.50000000,€1 500,6 525.45 PLN,4.350300000000000,€1 450.25,5 936.72 PLN,4.093150000000000,-€49.75,-588.73 PLN,€0,0 PLN
+29 kwi 2025,1 sie 2025,ASML Holding N.V.,ASME,NL0010273215,NL,2.50000000,€1 500,6 403.58 PLN,4.269050000000000,€1 514.58,6 470.03 PLN,4.271707000000000,€14.58,66.45 PLN,€0,0 PLN
+29 paź 2025,16 gru 2025,iShares Dow Jones Global Titans 50 ETF (Dist),EXI2,DE0006289382,DE,45.00000000,€4 500,19 089.16 PLN,4.242035000000000,€4 392.94,18 506.81 PLN,4.212934000000000,-€107.06,-582.35 PLN,€0,0 PLN
+
+Transactions for Brokerage Account sells - USD
+Portfolio  created on 15 cze 2023
+Date acquired,Date sold,Security name,Symbol,ISIN,Country,Qty,Cost basis,Cost basis base currency,Cost basis rate,Gross proceeds,Gross proceeds base currency,Gross proceeds rate,Gross PnL,Gross PnL base currency,Fees,Fees  base currency
+21 sty 2025,27 sty 2025,CrowdStrike,CRWD,US22788C1053,US,4.00000000,US$1 500,6 127.18 PLN,4.084790000000000,US$1 475.45,5 959.55 PLN,4.039493000000000,-US$24.55,-167.63 PLN,US$0.04,0.16 PLN
+5 gru 2024,10 mar 2025,Alibaba,BABA,US01609W1027,US,18.00000000,US$1 500,6 044.15 PLN,4.029433000000000,US$2 413.57,9 348.44 PLN,3.872659000000000,US$913.57,"3 304.29 PLN",US$0.07,0.27 PLN
+23 wrz 2024,10 mar 2025,Amazon,AMZN,US0231351067,US,8.00000000,US$1 500,5 766.53 PLN,3.844356000000000,US$1 540.78,5 967.93 PLN,3.872659000000000,US$40.78,201.40 PLN,US$0.04,0.15 PLN
+9 kwi 2025,10 kwi 2025,Strategy,MSTR,US5949724083,US,5.00000000,US$1 500,5 803.64 PLN,3.869099000000000,US$1 344.04,5 088.11 PLN,3.785697000000000,-US$155.96,-715.53 PLN,US$0.04,0.15 PLN
+9 kwi 2025,21 maj 2025,NVIDIA,NVDA,US67066G1040,US,12.00000000,US$1 500,5 803.64 PLN,3.869099000000000,US$2 340.19,8 630.69 PLN,3.688959000000000,US$840.19,"2 827.05 PLN",US$0,0 PLN
+6 cze 2025,10 paź 2025,Uber,UBER,US90353T1007,US,25.00000000,US$2 000,7 535.23 PLN,3.767615000000000,US$2 348.23,8 633.64 PLN,3.676239000000000,US$348.23,"1 098.41 PLN",US$0.01,0.03 PLN
+12 wrz 2025,10 paź 2025,Tesla,TSLA,US88160R1014,US,4.00000000,US$1 500,5 445.96 PLN,3.630641000000000,US$1 651.82,6 073.60 PLN,3.676239000000000,US$151.82,627.64 PLN,US$0,0 PLN
+
+Summary for Crypto
+Sells summary,Amount
+Gross proceeds,$12 345.67
+Cost basis,$11 234.56
+Realised gross PnL,$1 111.11
+
+Transactions for Crypto
+Date acquired,Date sold,Token name,Qty,Cost basis,Gross proceeds,Gross PnL
+8 gru 2024,16 maj 2025,ETH,0.025,US$101.50,US$63.45,-US$38.05
+5 maj 2025,16 maj 2025,ETH,0.50,US$914.24,US$1 267.84,US$353.60
+7 maj 2025,16 maj 2025,ETH,1.00,US$1 835.50,US$2 534.63,US$699.13
+9 maj 2025,21 maj 2025,BTC,0.00001,US$0.85,US$0.88,US$0.03
+9 maj 2025,24 maj 2025,BTC,0.00028,US$29.20,US$30.12,US$0.92
+11 maj 2025,24 maj 2025,BTC,0.00059,US$62.50,US$63.42,US$0.92
+10 maj 2025,20 cze 2025,ZKJ,0.039,$0,$0.01,$0.01
+10 maj 2025,20 cze 2025,ZKJ,40.50,US$90.27,US$11.82,-US$78.45
+19 cze 2025,20 cze 2025,ZKJ,535.56,US$185.20,US$156.54,-US$28.66
+20 cze 2025,22 cze 2025,DOT,77.80,US$279.41,US$251.57,-US$27.84
+23 maj 2025,16 sie 2025,ETH,0.263,US$688.65,US$1 139.03,US$450.38
+14 lip 2025,16 sie 2025,ETH,0.154,US$471.56,US$666.90,US$195.34
+20 lip 2025,16 sie 2025,ETH,0.062,US$234.50,US$268.03,US$33.53
+21 lis 2024,16 sie 2025,PEPE,362000,US$7.54,US$3.88,-US$3.66
+21 lis 2024,16 sie 2025,DOGE,49.81,US$19.50,US$11.36,-US$8.14
+11 maj 2025,19 sie 2025,BTC,0.0037,US$392.26,US$414.32,US$22.06
+21 maj 2025,19 sie 2025,BTC,0.0016,US$182.90,US$183.93,US$1.03
+22 maj 2025,19 sie 2025,BTC,0.0041,US$457.06,US$453.61,-US$3.45
+10 cze 2025,19 sie 2025,BTC,0.00004,US$4.41,US$4.47,US$0.06
+17 cze 2025,19 sie 2025,BTC,0.00010,US$10.96,US$11.66,US$0.70
+21 cze 2025,19 sie 2025,BTC,0.00004,US$4.45,US$4.73,US$0.28
+29 wrz 2025,10 paź 2025,ETH,0.192,US$809.08,US$706.19,-US$102.89
+20 sie 2025,2 gru 2025,BTC,0.00009,US$10.36,US$7.79,-US$2.57
+22 sie 2025,2 gru 2025,BTC,0.00009,US$10.63,US$7.77,-US$2.86
+23 sie 2025,2 gru 2025,BTC,0.00006,US$7.54,US$5.59,-US$1.95
+24 sie 2025,2 gru 2025,BTC,0.00009,US$10.58,US$7.88,-US$2.70
+26 sie 2025,2 gru 2025,BTC,0.00006,US$7.37,US$5.70,-US$1.67
+30 sie 2025,2 gru 2025,BTC,0.00004,US$4.47,US$3.50,-US$0.97
+5 wrz 2025,2 gru 2025,BTC,0.00008,US$9.00,US$6.90,-US$2.10
+6 wrz 2025,2 gru 2025,BTC,0.00008,US$9.00,US$6.92,-US$2.08
+9 wrz 2025,2 gru 2025,BTC,0.00006,US$7.51,US$5.66,-US$1.85
+20 wrz 2025,2 gru 2025,BTC,0.00007,US$8.48,US$6.26,-US$2.22
+27 wrz 2025,2 gru 2025,BTC,0.00009,US$10.24,US$8.02,-US$2.22
+6 paź 2025,2 gru 2025,BTC,0.00000,US$0.02,US$0.02,US$0
+26 wrz 2025,2 gru 2025,DOGE,688.32,US$161.68,US$92.96,-US$68.72
+26 wrz 2025,2 gru 2025,DOT,40.61,US$161.68,US$83.71,-US$77.97
+10 maj 2025,2 gru 2025,SEI,0.32,$0,$0.04,$0.04
+10 maj 2025,2 gru 2025,SEI,331.35,US$90.28,US$40.21,-US$50.07
