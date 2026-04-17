@@ -1125,7 +1125,9 @@ async def upload_file(file: UploadFile = File(...)):
         except HTTPException:
             raise
         except Exception as e:
-            logger.error(f"Error processing file {file_hash}: {str(e)}", exc_info=True)
+            import traceback
+            tb = traceback.format_exc()
+            logger.error(f"Error processing file {file_hash}: {type(e).__name__}: {str(e)}\n{tb}")
             # Don't expose internal error details to users
             raise HTTPException(status_code=500, detail="Wystapil blad podczas przetwarzania pliku. Sprawdz format pliku i sprobuj ponownie.")
         
@@ -1186,7 +1188,9 @@ async def upload_example():
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Error processing example file: {str(e)}", exc_info=True)
+        import traceback
+        tb = traceback.format_exc()
+        logger.error(f"Error processing example file: {type(e).__name__}: {str(e)}\n{tb}")
         # Don't expose internal error details to users
         raise HTTPException(status_code=500, detail="Wystapil blad podczas przetwarzania przykladowego pliku.")
     

@@ -33,7 +33,7 @@ class NBPCurrencyConverter:
     
     def __init__(self):
         self.cache = {}
-        self.base_url = "http://api.nbp.pl/api/exchangerates/rates/a/{currency}/{date}/?format=json"
+        self.base_url = "https://api.nbp.pl/api/exchangerates/rates/a/{currency}/{date}/?format=json"
     
     def get_rate(self, currency: str, date: str) -> Optional[float]:
         """
@@ -611,7 +611,7 @@ class RevolutToPIT38:
         print("\n=== POBIERANIE KURSÓW NBP ===\n")
         
         # API NBP pozwala pobrać wszystkie kursy dla danego roku
-        url_template = "http://api.nbp.pl/api/exchangerates/rates/a/{currency}/{start_date}/{end_date}/?format=json"
+        url_template = "https://api.nbp.pl/api/exchangerates/rates/a/{currency}/{start_date}/{end_date}/?format=json"
         
         for currency in ['EUR', 'USD']:
             # Pobierz kursy z końca poprzedniego roku (ostatnie 10 dni)
