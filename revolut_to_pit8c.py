@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Skrypt do przetwarzania raportu z Revoluta na format PIT-8C
+Skrypt do przetwarzania raportu z Revoluta na dane do PIT-38
 z przeliczeniem transakcji według kursów NBP
 """
 
@@ -255,8 +255,8 @@ def parse_date(date_str: str) -> str:
     
     return None
 
-class RevolutToPIT8C:
-    """Główna klasa do przetwarzania danych Revolut na PIT-8C"""
+class RevolutToPIT38:
+    """Główna klasa do przetwarzania danych Revolut na dane do PIT-38"""
     
     def __init__(self, csv_file: str):
         self.csv_file = csv_file
@@ -670,9 +670,9 @@ class RevolutToPIT8C:
         
         print(f"\n✓ Łącznie w cache: {len(self.converter.cache)} kursów\n")
     
-    def calculate_pit8c_data(self) -> Dict:
-        """Oblicza dane dla PIT-8C"""
-        print("\n=== OBLICZANIE DANYCH DLA PIT-8C ===\n")
+    def calculate_pit38_data(self) -> Dict:
+        """Oblicza dane dla PIT-38"""
+        print("\n=== OBLICZANIE DANYCH DLA PIT-38 ===\n")
         
         results = {
             'brokerage_sells': [],
@@ -817,7 +817,8 @@ class RevolutToPIT8C:
                 'kwota_brutto_waluta': trans['gross_amount'],
                 'podatek_waluta': trans['withholding_tax'],
                 'kurs_nbp': round(rate, 4) if rate else None,
-                'data_kursu': rate_date
+                'data_kursu': rate_date,
+                'kraj': 'Europa'
             })
             
             results['summary']['total_dividends_gross'] += gross_pln
@@ -844,7 +845,8 @@ class RevolutToPIT8C:
                 'kwota_brutto_waluta': trans['gross_amount'],
                 'podatek_waluta': trans['withholding_tax'],
                 'kurs_nbp': round(rate, 4) if rate else None,
-                'data_kursu': rate_date
+                'data_kursu': rate_date,
+                'kraj': 'USA'
             })
             
             results['summary']['total_dividends_gross'] += gross_pln
@@ -924,15 +926,15 @@ class RevolutToPIT8C:
         
         return results
     
-    def generate_report(self, output_file: str = 'raport_pit8c_2025.xlsx', results: dict = None):
-        """Generuje raport w formacie Excel"""
-        print("\n=== GENEROWANIE RAPORTU PIT-8C ===\n")
+    def generate_report(self, output_file: str = 'raport_pit38_2025.xlsx', results: dict = None):
+        """Generuje raport w formacie Excel z danymi do PIT-38"""
+        print("\n=== GENEROWANIE RAPORTU Z DANYMI DO PIT-38 ===\n")
         
         # Jeśli nie przekazano wyników, oblicz je
         if results is None:
             self.parse_file()
             self.preload_nbp_rates()
-            results = self.calculate_pit8c_data()
+            results = self.calculate_pit38_data()
         
         # Utwórz Excel z wieloma arkuszami
         with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
@@ -960,96 +962,148 @@ class RevolutToPIT8C:
                 df_interest.to_excel(writer, sheet_name='Odsetki z lokat', index=False)
                 print(f"✓ Zapisano {len(df_interest)} transakcji odsetek")
             
-            # Arkusz 5: Podsumowanie
+            # Arkusz 5: PIT/ZG - Dywidendy wg krajów
+            if results['dividends']:
+                pit_zg_data = {}
+                for div in results['dividends']:
+                    kraj = div.get('kraj', 'Nieznany')
+                    if kraj not in pit_zg_data:
+                        pit_zg_data[kraj] = {'kwota_brutto_pln': 0, 'podatek_pobrany_pln': 0}
+                    pit_zg_data[kraj]['kwota_brutto_pln'] += div['kwota_brutto_pln']
+                    pit_zg_data[kraj]['podatek_pobrany_pln'] += div['podatek_pobrany_pln']
+                
+                pit_zg_rows = []
+                for kraj, data in pit_zg_data.items():
+                    podatek_pl = round(data['kwota_brutto_pln'] * 0.19, 2)
+                    do_zaplaty = round(max(0, podatek_pl - data['podatek_pobrany_pln']), 2)
+                    pit_zg_rows.append({
+                        'Kraj': kraj,
+                        'Dywidendy brutto PLN': round(data['kwota_brutto_pln'], 2),
+                        'Podatek pobrany za granicą PLN': round(data['podatek_pobrany_pln'], 2),
+                        'Podatek należny w PL (19%)': podatek_pl,
+                        'Podatek do dopłaty w PL': do_zaplaty,
+                    })
+                
+                df_pit_zg = sanitize_dataframe(pd.DataFrame(pit_zg_rows))
+                df_pit_zg.to_excel(writer, sheet_name='PIT-ZG (wg krajów)', index=False)
+                print(f"✓ Zapisano dane PIT/ZG dla {len(pit_zg_data)} krajów")
+            
+            # Arkusz 6: Podsumowanie PIT-38
             summary_data = {
                 'Kategoria': [
-                    'AKCJE - Przychód ze sprzedaży',
-                    'AKCJE - Koszty uzyskania przychodu',
-                    'AKCJE - Zysk/Strata',
+                    '═══ PIT-38 SEKCJA C — AKCJE (Inne przychody) ═══',
+                    'AKCJE — Przychód ze sprzedaży',
+                    'AKCJE — Koszty uzyskania przychodu',
+                    'AKCJE — Zysk/Strata',
                     '',
-                    'DYWIDENDY - Przychód brutto',
-                    'DYWIDENDY - Podatek pobrany za granicą',
-                    'DYWIDENDY - Podatek należny w PL (19%)',
-                    'DYWIDENDY - Podatek do zapłaty (po odliczeniu)',
-                    'UWAGA: Dywidendy rozliczane osobno w PIT-8C część C',
+                    '═══ PIT-38 SEKCJA E — KRYPTOWALUTY ═══',
+                    'KRYPTOWALUTY — Przychód ze sprzedaży',
+                    'KRYPTOWALUTY — Koszty uzyskania przychodu',
+                    'KRYPTOWALUTY — Zysk/Strata',
                     '',
-                    'KRYPTOWALUTY - Przychód ze sprzedaży',
-                    'KRYPTOWALUTY - Koszty uzyskania przychodu',
-                    'KRYPTOWALUTY - Zysk/Strata',
+                    '═══ DYWIDENDY (PIT-38 + załącznik PIT/ZG) ═══',
+                    'DYWIDENDY — Przychód brutto',
+                    'DYWIDENDY — Podatek pobrany za granicą',
+                    'DYWIDENDY — Podatek należny w PL (19%)',
+                    'DYWIDENDY — Podatek do zapłaty (po odliczeniu)',
                     '',
-                    'ODSETKI Z LOKAT - Przychód (podatek Belki 19%)',
+                    '═══ ODSETKI Z LOKAT (podatek Belki 19%) ═══',
+                    'ODSETKI — Przychód',
                     '',
-                    '═══════════════════════════════════════════════',
-                    'RAZEM PRZYCHODY (akcje + krypto + odsetki)',
-                    'RAZEM KOSZTY (akcje + krypto)',
+                    '═══ SZACUNKOWE ZOBOWIĄZANIE PODATKOWE ═══',
+                    'Podatek 19% od akcji (Sekcja C)',
+                    'Podatek 19% od kryptowalut (Sekcja E)',
+                    'Podatek 19% od odsetek (Belki)',
+                    'Podatek od dywidend (do dopłaty)',
+                    'RAZEM SZACUNKOWY PODATEK',
                     '',
-                    'ŁĄCZNY ZYSK DO OPODATKOWANIA (akcje + krypto)',
-                    'PODATEK 19% od zysku kapitałowego (akcje + krypto)',
-                    'PODATEK 19% od odsetek (podatek Belki)',
-                    '',
-                    'RAZEM PODATEK DO ZAPŁATY (kapitałowy + Belka)'
+                    '═══ WAŻNE UWAGI ═══',
+                    'Strata z kryptowalut NIE pomniejsza zysku z akcji (i odwrotnie)',
+                    'Złożenie PIT-38 jest obowiązkowe nawet przy stracie',
+                    'Strata może być odliczana przez 5 kolejnych lat (art. 9 ust. 3)',
+                    'Dla dochodów zagranicznych wymagany załącznik PIT/ZG',
+                    'PIT/ZG składa się osobno dla każdego kraju',
+                    'Akcje → PIT-38 Sekcja C poz. Inne przychody',
+                    'Kryptowaluty → PIT-38 Sekcja E',
                 ],
                 'Kwota PLN': [
+                    '',
                     round(results['summary']['total_income_brokerage'], 2),
                     round(results['summary']['total_cost_brokerage'], 2),
                     round(results['summary']['total_profit_brokerage'], 2),
                     '',
-                    round(results['summary']['total_dividends_gross'], 2),
-                    round(results['summary']['total_dividends_tax_paid'], 2),
-                    round(results['summary']['total_dividends_gross'] * 0.19, 2),
-                    round(max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']), 2),
-                    '(patrz arkusz Dywidendy)',
                     '',
                     round(results['summary']['total_income_crypto'], 2),
                     round(results['summary']['total_cost_crypto'], 2),
                     round(results['summary']['total_profit_crypto'], 2),
                     '',
+                    '',
+                    round(results['summary']['total_dividends_gross'], 2),
+                    round(results['summary']['total_dividends_tax_paid'], 2),
+                    round(results['summary']['total_dividends_gross'] * 0.19, 2),
+                    round(max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']), 2),
+                    '',
+                    '',
                     round(results['summary']['total_interest'], 2),
                     '',
                     '',
-                    round(results['summary']['total_income_brokerage'] + 
-                          results['summary']['total_income_crypto'] +
-                          results['summary']['total_interest'], 2),
-                    round(results['summary']['total_cost_brokerage'] + 
-                          results['summary']['total_cost_crypto'], 2),
-                    '',
-                    round(results['summary']['total_profit_brokerage'] + 
-                          results['summary']['total_profit_crypto'], 2),
-                    round((results['summary']['total_profit_brokerage'] + 
-                           results['summary']['total_profit_crypto']) * 0.19, 2),
+                    round(max(0, results['summary']['total_profit_brokerage']) * 0.19, 2),
+                    round(max(0, results['summary']['total_profit_crypto']) * 0.19, 2),
                     round(results['summary']['total_interest'] * 0.19, 2),
+                    round(max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']), 2),
+                    round(max(0, results['summary']['total_profit_brokerage']) * 0.19 +
+                          max(0, results['summary']['total_profit_crypto']) * 0.19 +
+                          results['summary']['total_interest'] * 0.19 +
+                          max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']), 2),
                     '',
-                    round((results['summary']['total_profit_brokerage'] + 
-                           results['summary']['total_profit_crypto'] +
-                           results['summary']['total_interest']) * 0.19, 2)
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
                 ]
             }
             
             df_summary = sanitize_dataframe(pd.DataFrame(summary_data))
-            df_summary.to_excel(writer, sheet_name='Podsumowanie PIT-8C', index=False)
+            df_summary.to_excel(writer, sheet_name='Podsumowanie PIT-38', index=False)
         
         print(f"\n✓ Raport zapisany do pliku: {output_file}")
-        print("\n=== PODSUMOWANIE ===")
-        print(f"Zysk z akcji: {results['summary']['total_profit_brokerage']:.2f} PLN")
-        print(f"Zysk z krypto: {results['summary']['total_profit_crypto']:.2f} PLN")
+        print("\n=== PODSUMOWANIE PIT-38 ===")
+        print(f"\n--- Sekcja C: Akcje (Inne przychody) ---")
+        print(f"Przychód z akcji: {results['summary']['total_income_brokerage']:.2f} PLN")
+        print(f"Koszty z akcji: {results['summary']['total_cost_brokerage']:.2f} PLN")
+        print(f"Zysk/strata z akcji: {results['summary']['total_profit_brokerage']:.2f} PLN")
+        print(f"\n--- Sekcja E: Kryptowaluty ---")
+        print(f"Przychód z krypto: {results['summary']['total_income_crypto']:.2f} PLN")
+        print(f"Koszty z krypto: {results['summary']['total_cost_crypto']:.2f} PLN")
+        print(f"Zysk/strata z krypto: {results['summary']['total_profit_crypto']:.2f} PLN")
+        print(f"\n--- Dywidendy (+ PIT/ZG) ---")
+        print(f"Dywidendy brutto: {results['summary']['total_dividends_gross']:.2f} PLN")
+        print(f"Podatek zagraniczny: {results['summary']['total_dividends_tax_paid']:.2f} PLN")
+        print(f"Podatek do dopłaty w PL: {max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']):.2f} PLN")
+        print(f"\n--- Odsetki ---")
         print(f"Odsetki z lokat: {results['summary']['total_interest']:.2f} PLN")
-        print(f"Łączny zysk kapitałowy (akcje+krypto): {(results['summary']['total_profit_brokerage'] + results['summary']['total_profit_crypto']):.2f} PLN")
-        print(f"\nDywidendy brutto: {results['summary']['total_dividends_gross']:.2f} PLN")
-        print(f"Podatek zagraniczny zapłacony od dywidend: {results['summary']['total_dividends_tax_paid']:.2f} PLN")
-        print(f"Podatek należny w PL od dywidend (19%): {(results['summary']['total_dividends_gross'] * 0.19):.2f} PLN")
-        print(f"Podatek do dopłaty od dywidend: {max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid']):.2f} PLN")
         
-        tax_capital = (results['summary']['total_profit_brokerage'] + 
-                      results['summary']['total_profit_crypto']) * 0.19
+        tax_stocks = max(0, results['summary']['total_profit_brokerage']) * 0.19
+        tax_crypto = max(0, results['summary']['total_profit_crypto']) * 0.19
         tax_interest = results['summary']['total_interest'] * 0.19
         tax_dividends = max(0, results['summary']['total_dividends_gross'] * 0.19 - results['summary']['total_dividends_tax_paid'])
-        tax_total = tax_capital + tax_interest + tax_dividends
+        tax_total = tax_stocks + tax_crypto + tax_interest + tax_dividends
         
-        print(f"\nPodatek 19% od zysku kapitałowego (akcje+krypto): {tax_capital:.2f} PLN")
-        print(f"Podatek 19% od odsetek (Belka): {tax_interest:.2f} PLN")
-        print(f"Podatek do dopłaty od dywidend: {tax_dividends:.2f} PLN")
-        print(f"\n*** RAZEM PODATEK DO ZAPŁATY: {tax_total:.2f} PLN ***")
-        print("\nUWAGA: Dywidendy rozliczane osobno w PIT-8C część C (nie sumują się z zyskiem kapitałowym)")
+        print(f"\n--- Szacunkowy podatek ---")
+        print(f"Podatek od akcji (19%): {tax_stocks:.2f} PLN")
+        print(f"Podatek od krypto (19%): {tax_crypto:.2f} PLN")
+        print(f"Podatek od odsetek (19%): {tax_interest:.2f} PLN")
+        print(f"Podatek od dywidend (dopłata): {tax_dividends:.2f} PLN")
+        print(f"\n*** RAZEM SZACUNKOWY PODATEK: {tax_total:.2f} PLN ***")
+        print("\nUWAGI:")
+        print("• Strata z krypto NIE pomniejsza zysku z akcji (i odwrotnie)")
+        print("• Złożenie PIT-38 obowiązkowe nawet przy stracie")
+        print("• Strata może być odliczana przez 5 kolejnych lat")
+        print("• Wymagany załącznik PIT/ZG dla dochodów zagranicznych (osobny dla każdego kraju)")
 
 def main():
     import sys
@@ -1059,12 +1113,12 @@ def main():
         sys.exit(1)
     
     csv_file = sys.argv[1]
-    output_file = 'raport_pit8c_2025.xlsx'
+    output_file = 'raport_pit38_2025.xlsx'
     
     if len(sys.argv) >= 3:
         output_file = sys.argv[2]
     
-    converter = RevolutToPIT8C(csv_file)
+    converter = RevolutToPIT38(csv_file)
     converter.generate_report(output_file)
 
 if __name__ == '__main__':

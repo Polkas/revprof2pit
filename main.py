@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-FastAPI aplikacja do konwersji raportów Revolut na PIT-8C
+FastAPI aplikacja do konwersji raportów Revolut na dane do PIT-38
 """
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Request
@@ -9,7 +9,7 @@ import os
 import tempfile
 import shutil
 from pathlib import Path
-from revolut_to_pit8c import RevolutToPIT8C
+from revolut_to_pit8c import RevolutToPIT38
 import secrets
 from datetime import datetime, timedelta
 import io
@@ -21,7 +21,7 @@ import hashlib
 import signal
 from contextlib import contextmanager
 
-app = FastAPI(title="Revolut PIT-8C Converter")
+app = FastAPI(title="Revolut → PIT-38")
 
 # Configure logging
 log_dir = Path("logs")
@@ -456,12 +456,12 @@ async def home():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Revolut PIT-8C Converter</title>
+    <title>Revolut → PIT-38</title>
     <style>{COMMON_STYLES}</style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="navbar-brand">Revolut PIT-8C Converter</a>
+        <a href="/" class="navbar-brand">Revolut → PIT-38</a>
         <div class="navbar-links">
             <a href="/">Konwerter</a>
             <a href="/metodologia">Metodologia obliczen</a>
@@ -471,7 +471,7 @@ async def home():
     
     <div class="container">
         <div class="card">
-            <h1>Konwersja raportu Revolut na PIT-8C</h1>
+            <h1>Konwersja raportu Revolut na dane do PIT-38</h1>
             <p class="subtitle">Automatyczne przeliczenie transakcji wedlug kursow NBP zgodnie z polskim prawem podatkowym</p>
             
             <div class="info-box" style="background: #e3f2fd; border-left: 3px solid #2196f3; padding: 15px; margin: 20px 0;">
@@ -527,7 +527,7 @@ async def home():
                 </div>
                 
                 <button type="submit" class="submit-btn" id="submitBtn" disabled style="margin-top: 15px;">
-                    Generuj raport PIT-8C
+                    Generuj raport PIT-38
                 </button>
                 
                 <div style="text-align: center; margin-top: 10px;">
@@ -664,12 +664,12 @@ async def metodologia():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Metodologia obliczen - Revolut PIT-8C Converter</title>
+    <title>Metodologia obliczen - Revolut → PIT-38</title>
     <style>{COMMON_STYLES}</style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="navbar-brand">Revolut PIT-8C Converter</a>
+        <a href="/" class="navbar-brand">Revolut → PIT-38</a>
         <div class="navbar-links">
             <a href="/">Konwerter</a>
             <a href="/metodologia">Metodologia obliczen</a>
@@ -780,14 +780,22 @@ async def metodologia():
             <h2>4. Kryptowaluty</h2>
             <p>Dla kryptowalut nie stosuje sie cyklu T+1/T+2. Rozliczenie nastepuje <strong>natychmiastowo</strong>.</p>
             <p>Kurs NBP pobierany jest z dnia roboczego poprzedzajacego dzien transakcji.</p>
+            <div class="warning-box">
+                <strong>PIT-38 Sekcja E:</strong> Przychody z kryptowalut wykazuje sie w <strong>Sekcji E</strong> formularza PIT-38, 
+                oddzielnie od akcji (Sekcja C). Strata z kryptowalut nie moze pomniejszyc zysku z akcji i odwrotnie.
+            </div>
         </div>
         
         <div class="card">
             <h2>5. Dywidendy</h2>
             <p>Przychod z dywidend powstaje w dniu ich wyplaty. Kurs NBP pobierany jest z dnia roboczego 
             poprzedzajacego dzien wyplaty.</p>
-            <p>Od dywidend zagranicznych czesto pobierany jest podatek u zrodla (np. 15% w USA). 
-            Podatek ten mozna odliczyc od podatku naleznego w Polsce (19%).</p>
+            <p>Od dywidend zagranicznych czesto pobierany jest podatek u zrodla (np. 15% w USA przy wypelnionym 
+            formularzu W-8BEN, 30% bez formularza). Podatek ten mozna odliczyc od podatku naleznego w Polsce (19%).</p>
+            <div class="warning-box">
+                <strong>Zalacznik PIT/ZG:</strong> Dla dochodow zagranicznych (dywidend) wymagany jest zalacznik PIT/ZG, 
+                skladany <strong>osobno dla kazdego kraju</strong> pochodzenia dochodu.
+            </div>
         </div>
         
         <div class="card">
@@ -922,12 +930,12 @@ async def zastrzezenia():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zastrzezenia prawne - Revolut PIT-8C Converter</title>
+    <title>Zastrzezenia prawne - Revolut → PIT-38</title>
     <style>{COMMON_STYLES}</style>
 </head>
 <body>
     <nav class="navbar">
-        <a href="/" class="navbar-brand">Revolut PIT-8C Converter</a>
+        <a href="/" class="navbar-brand">Revolut → PIT-38</a>
         <div class="navbar-links">
             <a href="/">Konwerter</a>
             <a href="/metodologia">Metodologia obliczen</a>
@@ -1075,13 +1083,13 @@ async def upload_file(file: UploadFile = File(...)):
             with open(input_path, 'wb') as buffer:
                 buffer.write(contents)
             
-            output_filename = f"raport_pit8c_{safe_filename.replace('.csv', '')}.xlsx"
+            output_filename = f"raport_pit38_{safe_filename.replace('.csv', '')}.xlsx"
             output_path = os.path.join(temp_dir, output_filename)
             
-            converter = RevolutToPIT8C(input_path)
+            converter = RevolutToPIT38(input_path)
             converter.parse_file()
             converter.preload_nbp_rates()
-            results = converter.calculate_pit8c_data()
+            results = converter.calculate_pit38_data()
             converter.generate_report(output_path, results)
             
             # Read file into memory
@@ -1137,13 +1145,13 @@ async def upload_example():
     temp_dir = tempfile.mkdtemp()
     
     try:
-        output_filename = "raport_pit8c_przyklad.xlsx"
+        output_filename = "raport_pit38_przyklad.xlsx"
         output_path = os.path.join(temp_dir, output_filename)
         
-        converter = RevolutToPIT8C(str(example_file))
+        converter = RevolutToPIT38(str(example_file))
         converter.parse_file()
         converter.preload_nbp_rates()
-        results = converter.calculate_pit8c_data()
+        results = converter.calculate_pit38_data()
         converter.generate_report(output_path, results)
         
         # Read file into memory
@@ -1236,7 +1244,7 @@ def cleanup_if_memory_high():
         for i in range(files_to_remove):
             del temporary_files[sorted_files[i][0]]
 
-def generate_explanation(converter: RevolutToPIT8C, results: dict) -> str:
+def generate_explanation(converter: RevolutToPIT38, results: dict) -> str:
     """Generuje profesjonalne podsumowanie obliczen w formacie HTML"""
     html = []
     
@@ -1302,22 +1310,18 @@ def generate_explanation(converter: RevolutToPIT8C, results: dict) -> str:
     if total_interest > 0:
         html.append(f'<tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Odsetki z lokat</td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">{results["summary"]["total_interest"]:,.2f}</td></tr>')
     
-    # Podsumowanie calkowite
-    total_income_all = (results['summary']['total_income_brokerage'] + 
-                        results['summary']['total_income_crypto'] + 
-                        results['summary']['total_interest'])
-    total_cost_all = (results['summary']['total_cost_brokerage'] + 
-                      results['summary']['total_cost_crypto'])
-    
-    html.append('<tr style="background: #e3f2fd; border-top: 2px solid #2196f3;"><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>RAZEM PRZYCHODY (akcje + krypto + odsetki)</strong></td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;"><strong>{:,.2f}</strong></td></tr>'.format(total_income_all))
-    html.append('<tr style="background: #e3f2fd;"><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;"><strong>RAZEM KOSZTY (akcje + krypto)</strong></td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;"><strong>{:,.2f}</strong></td></tr>'.format(total_cost_all))
-    
+    # Uwaga o strukturze PIT-38
     html.append('</table>')
     
-    # Obliczenie podatkow
-    total_capital_profit = (results['summary']['total_profit_brokerage'] + 
-                            results['summary']['total_profit_crypto'])
-    tax_capital = max(0, total_capital_profit * 0.19)
+    html.append('''<div style="background: #e3f2fd; padding: 12px; border-radius: 6px; margin: 15px 0; border-left: 3px solid #2196f3; font-size: 14px;">
+        <strong>Struktura PIT-38:</strong> Akcje wykazuje sie w <strong>Sekcji C</strong> (Inne przychody), 
+        kryptowaluty w <strong>Sekcji E</strong>. Strata z kryptowalut NIE pomniejsza zysku z akcji (i odwrotnie).
+        Dla dochodow zagranicznych wymagany jest zalacznik <strong>PIT/ZG</strong> (osobny dla kazdego kraju).
+    </div>''')
+    
+    # Obliczenie podatkow (oddzielnie dla akcji i krypto zgodnie z PIT-38)
+    tax_stocks = max(0, results['summary']['total_profit_brokerage']) * 0.19
+    tax_crypto = max(0, results['summary']['total_profit_crypto']) * 0.19
     tax_interest = results['summary']['total_interest'] * 0.19
     
     if total_dividends > 0:
@@ -1326,14 +1330,17 @@ def generate_explanation(converter: RevolutToPIT8C, results: dict) -> str:
     else:
         tax_dividends = 0
     
-    total_tax = tax_capital + tax_interest + tax_dividends
+    total_tax = tax_stocks + tax_crypto + tax_interest + tax_dividends
     
     html.append('<h3 style="margin-top: 30px;">Szacunkowe zobowiazanie podatkowe</h3>')
     html.append('<table style="width: 100%; border-collapse: collapse; margin: 15px 0;">')
     html.append('<tr style="background: #f8f9fa;"><th style="padding: 10px; text-align: left; border-bottom: 1px solid #e0e0e0;">Podatek</th><th style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">Kwota PLN</th></tr>')
     
-    if total_capital_profit != 0:
-        html.append(f'<tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Podatek 19% od zyskow kapitalowych</td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">{tax_capital:,.2f}</td></tr>')
+    if results['summary']['total_profit_brokerage'] != 0:
+        html.append(f'<tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Podatek 19% od akcji (Sekcja C PIT-38)</td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">{tax_stocks:,.2f}</td></tr>')
+    
+    if results['summary']['total_profit_crypto'] != 0:
+        html.append(f'<tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Podatek 19% od kryptowalut (Sekcja E PIT-38)</td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">{tax_crypto:,.2f}</td></tr>')
     
     if total_interest > 0:
         html.append(f'<tr><td style="padding: 10px; border-bottom: 1px solid #e0e0e0;">Podatek Belki 19% od odsetek</td><td style="padding: 10px; text-align: right; border-bottom: 1px solid #e0e0e0;">{tax_interest:,.2f}</td></tr>')
@@ -1344,11 +1351,21 @@ def generate_explanation(converter: RevolutToPIT8C, results: dict) -> str:
     html.append(f'<tr style="background: #1a1a2e; color: white;"><td style="padding: 12px;"><strong>RAZEM SZACUNKOWY PODATEK</strong></td><td style="padding: 12px; text-align: right;"><strong>{total_tax:,.2f}</strong></td></tr>')
     html.append('</table>')
     
-    # Ostrzezenie
+    # Ostrzezenie i przypomnienie
     html.append('''<div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin-top: 20px; border: 1px solid #ffc107;">
         <strong>Uwaga:</strong> Powyzsze obliczenia maja charakter szacunkowy i informacyjny. 
         Prosimy o weryfikacje wynikow przed zlozeniem zeznania podatkowego. 
         Szczegolowe dane znajduja sie w wygenerowanym pliku Excel.
+    </div>''')
+    
+    html.append('''<div style="background: #e8f5e9; padding: 15px; border-radius: 6px; margin-top: 10px; border: 1px solid #4caf50; font-size: 14px;">
+        <strong>Przypomnienie:</strong>
+        <ul style="margin: 8px 0 0 20px; line-height: 1.8;">
+            <li>Termin zlozenia PIT-38: <strong>30 kwietnia 2026 r.</strong></li>
+            <li>Zlozenie PIT-38 jest <strong>obowiazkowe nawet przy stracie</strong></li>
+            <li>Strata moze byc odliczana przez <strong>5 kolejnych lat</strong></li>
+            <li>Dla dochodow zagranicznych wymagany <strong>zalacznik PIT/ZG</strong> (osobny dla kazdego kraju)</li>
+        </ul>
     </div>''')
     
     html.append('</div>')

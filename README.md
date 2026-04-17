@@ -1,12 +1,14 @@
-# Revolut to PIT-8C Converter
+# Revolut → PIT-38
 
-Aplikacja webowa do automatycznej konwersji wyciągów z Revolut na raporty PIT-8C dla polskiego rozliczenia podatkowego.
+Aplikacja webowa do automatycznej konwersji wyciągów z Revolut na dane do PIT-38 dla polskiego rozliczenia podatkowego.
 
 ## 🚀 Funkcje
 
-- ✅ Konwersja wyciągów Revolut (CSV) na format Excel dla PIT-8C
+- ✅ Konwersja wyciągów Revolut (CSV) na format Excel z danymi do PIT-38
 - ✅ Automatyczne pobieranie kursów NBP zgodnie z prawem podatkowym
 - ✅ Obsługa akcji, dywidend, kryptowalut i odsetek
+- ✅ Oddzielne rozliczenie akcji (Sekcja C) i kryptowalut (Sekcja E)
+- ✅ Generowanie danych do załącznika PIT/ZG (dywidendy wg krajów)
 - ✅ Rozliczenie T+1/T+2 dla rynków USA i europejskich
 - ✅ Interfejs webowy - wgraj plik, pobierz raport
 - ✅ Deployment z Docker i docker-compose
@@ -68,7 +70,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 1. Wejdź na http://localhost:8000
 2. Pobierz wyciąg z Revolut (CSV) za dany rok podatkowy
 3. Wgraj plik przez formularz na stronie
-4. Pobierz wygenerowany raport Excel z danymi dla PIT-8C
+4. Pobierz wygenerowany raport Excel z danymi do PIT-38
 
 ## 📂 Struktura projektu
 
