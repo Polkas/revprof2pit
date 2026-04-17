@@ -26,7 +26,7 @@ def sanitize_excel_value(value):
 
 def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """Sanitize all string values in DataFrame to prevent Excel injection"""
-    return df.applymap(sanitize_excel_value) if not df.empty else df
+    return df.map(sanitize_excel_value) if not df.empty else df
 
 class NBPCurrencyConverter:
     """Klasa do pobierania kursów walut z API NBP"""
